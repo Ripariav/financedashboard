@@ -1,0 +1,201 @@
+{% extends "base.html" %}
+
+{% block content %}    
+    <div class="flex  flex-col">
+        
+      <form method="POST">
+          <div class="flex gap-4 mb-4 bg-sky-100 text-white rounded-lg p-2">
+              <div class="flex bg-sky-700  rounded-lg p-2 gap-x-2 items-center">
+                  <label for="fecha_inicio ">Fecha Inicio:</label>
+                  <input class="bg-sky-700 rounded-lg p-2" type="date" id="primera_fecha" name="primera_fecha" value="{{ fecha_inicio }}" required>
+              </div>
+              <div class="flex bg-sky-700 rounded-lg p-2 gap-x-2 items-center">
+                  <label for="fecha_fin">Fecha Fin:</label>
+                  <input class="bg-sky-700 rounded-lg p-2" type="date" id="segunda_fecha" name="segunda_fecha" value="{{ fecha_fin }}" required>
+              </div>
+
+              <div class="flex bg-sky-700 rounded-lg p-2 gap-x-2 items-center">
+                <label for="ticker" class="flex flex-row gap-x-2 items-center justify-cente">Ticker de la empresa: <img class="size-4 r" src="{{ url_for('static', filename='img/exclamation.svg') }}" alt="Exclamation"></label> 
+                <input class="bg-sky-700 rounded-lg p-2" type="text" id="ticker" name="ticker" value="{{ ticker }}" required>
+            </div>
+              <button type="submit" class="bg-sky-700 text-white px-4 py-2 rounded hover:bg-sky-600">Filtrar</button>
+          </div>
+      </form>
+
+
+        <div class=" flex flex-row items-center justify-normal  my-2 gap-x-10">
+            <div class="overflow-x-auto flex items-center  my-2">
+                <div class="border-2 border-sky-100 bg-sky-50 rounded-lg">
+                    {{ tabla_plotly | safe }}
+                </div>
+            </div>
+    
+            <!--informacion del archivo-->
+            <div class="flex flex-row gap-x-6 ">
+                <div class="flex flex-col gap-y-6 ">
+                    <article class="flex items-end justify-between rounded-lg border border-sky-100 bg-sky-50 p-6">
+                        <div class="flex items-center gap-4">
+                          <span class="hidden rounded-full bg-sky-100 p-2 text-sky-600 sm:block">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              class="size-6"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                              stroke-width="2"
+                            >
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"
+                              />
+                            </svg>
+                          </span>   
+                          <div>
+                            <p class="text-sm text-sky-500">Punto mas alto abierto hasta ahora.</p>
+                            <p class="text-2xl font-medium text-sky-900">${{ max_open }}</p>
+                          </div>
+                        </div>
+                    </article>  
+                    <article class="flex items-end justify-between rounded-lg border border-sky-100 bg-sky-50 p-6">
+                        <div class="flex items-center gap-4">
+                          <span class="hidden rounded-full bg-sky-100 p-2 text-sky-600 sm:block">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              class="size-6"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                              stroke-width="2"
+                            >
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"
+                              />
+                            </svg>
+                          </span>   
+                          <div>
+                            <p class="text-sm text-sky-500">Punto mas bajo abierto hasta ahora.</p>
+                            <p class="text-2xl font-medium text-sky-900">${{ min_open }}</p>
+                          </div>
+                        </div>
+                    </article>
+                     
+                </div>
+                <div class="flex flex-col gap-y-6 ">
+                    <article class="flex items-end justify-between rounded-lg border border-sky-100 bg-sky-50 p-6">
+                        <div class="flex items-center gap-4">
+                          <span class="hidden rounded-full bg-sky-100 p-2 text-sky-600 sm:block">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              class="size-6"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                              stroke-width="2"
+                            >
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"
+                              />
+                            </svg>
+                          </span>   
+                          <div>
+                            <p class="text-sm text-sky-500">Punto mas alto cerrado hasta ahora.</p>
+                            <p class="text-2xl font-medium text-sky-900">${{ max_close }}</p>
+                          </div>
+                        </div>
+                    </article>  
+                    <article class="flex items-end justify-between rounded-lg border border-sky-100 bg-sky-50 p-6">
+                        <div class="flex items-center gap-4">
+                          <span class="hidden rounded-full bg-sky-100 p-2 text-sky-600 sm:block">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              class="size-6"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                              stroke-width="2"
+                            >
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"
+                              />
+                            </svg>
+                          </span>   
+                          <div>
+                            <p class="text-sm text-sky-500">Punto mas bajo cerrado hasta ahora.</p>
+                            <p class="text-2xl font-medium text-sky-900">${{ min_close }}</p>
+                          </div>
+                        </div>
+                    </article>
+                     
+                </div>
+            </div>
+
+            <div class="border-2 border-sky-100 bg-sky-50 rounded-lg">
+              {{ grafica_lineas_plotly | safe }}
+            </div>
+            
+        </div>
+        
+      <div class="flex flex-row gap-x-8 my-5 justify-around ">
+          
+          <!-- Grafica de Volatilidad -->
+          <div class="border-2 border-sky-100 bg-sky-50 rounded-lg">
+            {{ grafica_volatilidad_plotly | safe }}
+          </div>
+          
+          <!-- Métricas de Volatilidad -->
+          <div class="flex flex-col flex-wrap gap-y-4 items-center justify-center my-2">
+            <article class="rounded-lg border border-sky-100 bg-sky-50 p-6">
+                <p class="text-sm text-sky-500">Volatilidad Histórica Anualizada</p>
+                <p class="text-2xl font-medium text-sky-900">{{ volatilidad_historica }}%</p>
+            </article>
+            <article class="rounded-lg border border-sky-100 bg-sky-50 p-6">
+                <p class="text-sm text-sky-500">ATR (Average True Range)</p>
+                <p class="text-2xl font-medium text-sky-900">${{ atr }}</p>
+            </article>
+            <article class="rounded-lg border border-sky-100 bg-sky-50 p-6">
+                <p class="text-sm text-sky-500">Volatilidad de Parkinson</p>
+                <p class="text-2xl font-medium text-sky-900">{{ parkinson_volatility }}%</p>
+            </article>
+          </div>
+          
+          <div class="border-2 border-sky-100 bg-sky-50 rounded-lg">
+            {{ grafica_velas_plotly | safe }}
+        </div>
+      </div>
+
+        
+
+        <div class="flex flex-row justify-around">
+            <div class=" overflow-x-auto flex items-center  my-2">
+                <!-- Grafica de Resultados -->
+                <div class="border-2 border-sky-100 bg-sky-50 rounded-lg">
+                  {{ grafica_resultados_plotly | safe }}
+                </div>
+            </div>
+            <div class=" overflow-x-auto flex items-center  my-2">
+                <div class="border-2 border-sky-100 bg-sky-50 rounded-lg">
+                    {{ grafica_barras_plotly | safe }}
+                </div>
+            </div>
+            <div class=" overflow-x-auto flex items-center  my-2">
+              <div class="border-2 border-sky-100 bg-sky-50 rounded-lg">
+                {{ grafica_pastel_plotly | safe }}
+              </div>
+            </div>
+        </div>
+
+        <!-- Análisis de Volatilidad -->
+
+        
+          
+        
+    </div>
+{% endblock %}
+
